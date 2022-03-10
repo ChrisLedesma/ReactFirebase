@@ -10,6 +10,7 @@ import thunk from "redux-thunk";
 import { reduxFirestore, getFirestore } from "redux-firestore";
 import { reactReduxFirebase, getFirebase } from "react-redux-firebase";
 import firebaseConfig from "./config/firebaseConfig";
+import 'firebase/compat/database';
 
 const store = createStore(
   rootReducer,
@@ -19,6 +20,10 @@ const store = createStore(
     //pass firebase database details for connection
     reduxFirestore(firebaseConfig),
     reactReduxFirebase(firebaseConfig, {
+      //get current user data from users document
+      userProfile: 'users',
+      //get current user data when logged in
+      useFirestoreForProfile: true,
       attachAuthIsReady: true,
       firebaseStateName: "firebase",
     })
