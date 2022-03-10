@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { connect } from 'react-redux';
-import { createProject } from '../../store/actions/projectActions';
+import { connect } from "react-redux";
+import { createProject } from "../../store/actions/projectActions";
+import { Redirect } from "react-router-dom";
 
 class CreateProject extends Component {
   //project data
@@ -21,6 +22,9 @@ class CreateProject extends Component {
     this.props.createProject(this.state);
   };
   render() {
+    const { auth } = this.props;
+    //redirect user if not logged in
+    if (!auth.uid) return <Redirect to="/signin" />;
     return (
       <div className="container">
         <form onSubmit={this.handleSubmit} className="white">
@@ -37,25 +41,30 @@ class CreateProject extends Component {
               id="content"
               className="materialize-textarea"
               onChange={this.handleChange}
-            >
-            </textarea>
+            ></textarea>
           </div>
 
           <div className="input-field">
             <button className="btn pink lighten-1 z-depth-0">Create</button>
           </div>
-
         </form>
       </div>
     );
   }
 }
+//check if user is logged in or not
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth,
+  };
+};
+
 //action has been called
 const mapDispatchToProps = (dispatch) => {
   return {
     //pass action and project(state) data
-    createProject: (project) => dispatch(createProject(project))
-  }
-}
+    createProject: (project) => dispatch(createProject(project)),
+  };
+};
 //null first because there is no mapStateToProps
-export default connect(null, mapDispatchToProps)(CreateProject);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateProject);

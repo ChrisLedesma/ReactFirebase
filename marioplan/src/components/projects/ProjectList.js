@@ -9,8 +9,8 @@ const ProjectList = ({projects}) => {
           and pass it to projectSummary */}
       { projects && projects.map(project => {
         return(
-          <Link to={'/project/' + project.id}>
-            <ProjectSummary project={project} key={project.id} />
+          <Link to={'/project/' + project.id} key={project.id} >
+            <ProjectSummary project={project} />
           </Link>
         )
       })}
