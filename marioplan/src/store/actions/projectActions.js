@@ -5,15 +5,19 @@ export const createProject = (project) => {
 
     //set reference from firestore db
     const firestore = getFirestore();
+    //get user profile
+    const profile = getState().firebase.profile;
+    //get user uid
+    const authorId = getState().firebase.auth.uid;
     //reference firestore 'projects' collection and add data
     firestore
       .collection("projects")
       .add({
         //spread/separate properties(project.title and project.content) of project data
         ...project,
-        authorFirstName: "Big",
-        authorLastName: "Yoshi",
-        authorId: "12345",
+        authorFirstName: profile.firstName,
+        authorLastName: profile.lastName,
+        authorId: authorId,
         createdAt: new Date(),
       })
       .then(() => {

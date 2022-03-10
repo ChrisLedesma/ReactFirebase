@@ -20,6 +20,8 @@ class CreateProject extends Component {
     //console.log(this.state);
     //pass project data to mapDispatchToProps
     this.props.createProject(this.state);
+    //redirect to dashboard
+    this.props.history.push('/');
   };
   render() {
     const { auth } = this.props;
