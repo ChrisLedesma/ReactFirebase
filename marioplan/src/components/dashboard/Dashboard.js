@@ -10,7 +10,7 @@ class Dashboard extends Component {
   render() {
     //console.log(this.props);
     //pass project data to projectList
-    const { projects, auth } = this.props;
+    const { projects, auth, notifications } = this.props;
     //redirect user if not logged in
     if (!auth.uid) return <Redirect to='/signin'/>
     return (
@@ -22,7 +22,7 @@ class Dashboard extends Component {
           </div>
           {/* notification area*/}
           <div className="col s12 m5 offset-m1">
-            <Notifications />
+            <Notifications notifications={notifications} />
           </div>
         </div>
       </div>
@@ -35,6 +35,7 @@ const mapStateToProps = (state) => {
   return {
     //get project data from rootReducer -> projectReducer
     projects: state.firestore.ordered.projects,
+    notifications: state.firestore.ordered.notifications,
     //check if user is logged in or not
     auth: state.firebase.auth
   };
@@ -43,5 +44,9 @@ const mapStateToProps = (state) => {
 export default compose(
   connect(mapStateToProps),
   //select which collection from db to use
-  firestoreConnect([{ collection: "projects" }])
+  firestoreConnect([
+    { collection: 'projects', orderBy: ['createdAt', 'desc']},
+    { collection: 'notifications', limit: 4, orderBy: ['createdAt', 'desc']}
+  ])
+
 )(Dashboard);

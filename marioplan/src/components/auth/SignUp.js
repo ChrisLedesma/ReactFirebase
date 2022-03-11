@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { signUp } from "../../store/actions/authActions";
+import { createUserNotif } from "../../store/actions/notifActions";
 
 class SignUp extends Component {
   state = {
@@ -20,6 +21,7 @@ class SignUp extends Component {
     e.preventDefault();
     //console.log(this.state);
     this.props.signUp(this.state);
+    this.props.createUserNotif(this.state);
   };
   render() {
     const { auth, authError } = this.props;
@@ -72,6 +74,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     signUp: (newUser) => dispatch(signUp(newUser)),
+    createUserNotif: (newUser) => dispatch(createUserNotif(newUser))
   };
 };
 

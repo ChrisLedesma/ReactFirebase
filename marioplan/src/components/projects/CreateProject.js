@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { createProject } from "../../store/actions/projectActions";
 import { Redirect } from "react-router-dom";
+import { createProjectNotif } from "../../store/actions/notifActions"
 
 class CreateProject extends Component {
   //project data
@@ -20,6 +21,7 @@ class CreateProject extends Component {
     //console.log(this.state);
     //pass project data to mapDispatchToProps
     this.props.createProject(this.state);
+    this.props.createProjectNotif(this.state);
     //redirect to dashboard
     this.props.history.push('/');
   };
@@ -66,6 +68,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     //pass action and project(state) data
     createProject: (project) => dispatch(createProject(project)),
+    createProjectNotif: () => dispatch(createProjectNotif()),
   };
 };
 //null first because there is no mapStateToProps

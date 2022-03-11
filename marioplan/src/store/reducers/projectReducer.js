@@ -1,9 +1,5 @@
 const initState = {
-  projects: [
-    { id: "1", title: "dog", content: "pet da dog" },
-    { id: "2", title: "cat", content: "pet da cat" },
-    { id: "3", title: "tutel", content: "pet da tutel" },
-  ],
+  projects: null
 };
 //recieved data and action from projectActions
 const projectReducer = (state = initState, action) => {
